@@ -1,0 +1,210 @@
+{
+  "updatedAt": "2026-10-22",
+  "currency": "TRY",
+  "unit": "kWh",
+  "vatIncluded": true,
+  "schema": {
+    "ac/dc": "{min,max} TL/kWh; min==max ise tek fiyat. null = bu tipte soket/fiyat yok.",
+    "variesByLocation": "true ise gerçek fiyat istasyona göre aralık içinde değişir",
+    "confidence": "high = operatörün resmi sayfasından bugün doğrulandı; medium = güncel agregatör + başka kaynakla uyumlu; low = tek kaynak",
+    "brands anahtarı": "stations.json içindeki brandKey ile eşleşir"
+  },
+  "sources": {
+    "araclo": "https://www.araclo.com/elektrikli-arac-sarj-tarifeleri (14.10.2026)",
+    "donanimhaber": "https://www.donanimhaber.com/elektrik-arac-sarj-istasyonlari-fiyat-listesi--191391 (güncelleme 21 Eylül)",
+    "sarjnekadar": "https://sarjnekadar.com/ (12.09.2026)"
+  },
+  "brands": {
+    "zes": {
+      "name": "ZES", "ac": {"min": 10.99, "max": 10.99}, "dc": {"min": 12.99, "max": 16.49},
+      "variesByLocation": true, "confidence": "high",
+      "source": "https://zes.net/fiyatlar-tr", "checkedAt": "2026-10-22",
+      "note": "Kesin fiyat uygulamada soket seçiminde görünür. Şarj bittikten sonra 15 dk'dan uzun bekleme ücretli."
+    },
+    "trugo": {
+      "name": "Trugo", "ac": {"min": 9.95, "max": 9.95}, "dc": {"min": 12.00, "max": 14.98},
+      "variesByLocation": true, "confidence": "high",
+      "source": "https://www.trugo.com.tr/price", "checkedAt": "2026-10-22",
+      "note": "Seçili istasyonlarda 12 TL/kWh. Togg sahiplerine DC'de %20 indirim."
+    },
+    "esarj": {
+      "name": "Eşarj", "ac": {"min": 9.90, "max": 9.90}, "dc": {"min": 9.90, "max": 14.90},
+      "variesByLocation": true, "confidence": "medium",
+      "source": "araclo + donanimhaber", "checkedAt": "2026-10-22",
+      "note": "Standart DC 13,50; seçili DC istasyonlarında 9,90 ve 12,90. Resmi site bu ortamdan açılamadı."
+    },
+    "wat-mobilite": {
+      "name": "WAT Mobilite", "ac": {"min": 9.99, "max": 10.99}, "dc": {"min": 11.99, "max": 14.49},
+      "variesByLocation": true, "confidence": "high",
+      "source": "https://www.watmobilite.com/cozumler/kamusal-alanlar#guncel-fiyat-ve-tarifeler",
+      "checkedAt": "2026-10-22", "effectiveFrom": "2026-10-08",
+      "note": "İndirimli tarifeler listesindeki DC istasyonlarında 11,99."
+    },
+    "otopriz": {
+      "name": "Otopriz", "ac": {"min": 7.93, "max": 9.90}, "dc": {"min": 9.73, "max": 13.90},
+      "variesByLocation": true, "confidence": "medium",
+      "source": "araclo", "checkedAt": "2026-10-22", "effectiveFrom": "2026-01-20",
+      "note": "Lokasyon bazlı indirimler var. Resmi site otomatik erişime kapalı."
+    },
+    "voltrun": {
+      "name": "Voltrun", "ac": {"min": 9.90, "max": 9.90}, "dc": {"min": 12.90, "max": 12.90},
+      "variesByLocation": false, "confidence": "high",
+      "source": "https://www.voltrun.com/tr/tarifeler", "checkedAt": "2026-10-22", "effectiveFrom": "2026-01-14",
+      "note": "AC fiyatı ev sahibi lokasyonla anlaşmaya göre değişebilir. Bekleme ücreti AC 1,50 / DC 5 TL/dk."
+    },
+    "astor": {
+      "name": "Astor Şarj", "ac": {"min": 9.89, "max": 9.89}, "dc": {"min": 13.99, "max": 13.99},
+      "variesByLocation": false, "confidence": "high",
+      "source": "https://astorsarj.com.tr/index.html", "checkedAt": "2026-10-22"
+    },
+    "en-yakit": {
+      "name": "En Yakıt", "ac": null, "dc": {"min": 10.90, "max": 14.90},
+      "variesByLocation": true, "confidence": "high",
+      "source": "https://www.enyakit.com.tr/ucretlendirme", "checkedAt": "2026-10-22",
+      "note": "Ağ tamamen DC. Standart 14,90; 20 kampanyalı istasyonda 10,90."
+    },
+    "oncharge": {
+      "name": "Oncharge", "ac": {"min": 9.99, "max": 9.99}, "dc": {"min": 13.50, "max": 13.50},
+      "variesByLocation": true, "confidence": "high",
+      "source": "https://oncharge.com.tr/fiyatlar", "checkedAt": "2026-10-22"
+    },
+    "otojet": {
+      "name": "Otojet", "ac": {"min": 10.99, "max": 10.99}, "dc": {"min": 15.49, "max": 15.49},
+      "variesByLocation": false, "confidence": "high",
+      "source": "https://www.oto-jet.com.tr/fiyatlarimiz", "checkedAt": "2026-10-22"
+    },
+    "5-sarj": {
+      "name": "5 Şarj", "ac": {"min": 8.99, "max": 8.99}, "dc": {"min": 15.90, "max": 15.90},
+      "variesByLocation": false, "confidence": "medium",
+      "source": "araclo + donanimhaber + sarjnekadar", "checkedAt": "2026-10-22"
+    },
+    "d-charge": {
+      "name": "D-Charge", "ac": {"min": 10.90, "max": 10.90}, "dc": {"min": 14.90, "max": 14.90},
+      "variesByLocation": false, "confidence": "low",
+      "source": "donanimhaber", "checkedAt": "2026-10-22"
+    },
+    "shell": {
+      "name": "Shell Recharge", "ac": {"min": 11.99, "max": 11.99}, "dc": {"min": 12.99, "max": 15.99},
+      "variesByLocation": true, "confidence": "medium",
+      "source": "donanimhaber + sarjnekadar", "checkedAt": "2026-10-22"
+    },
+    "tuncmatik": {
+      "name": "Tunçmatik Charge", "ac": {"min": 10.99, "max": 10.99}, "dc": {"min": 15.49, "max": 15.49},
+      "variesByLocation": false, "confidence": "low",
+      "source": "araclo", "checkedAt": "2026-10-22"
+    },
+    "otowatt": {
+      "name": "otoWATT", "ac": {"min": 9.49, "max": 10.99}, "dc": {"min": 11.99, "max": 13.99},
+      "variesByLocation": true, "confidence": "medium",
+      "source": "donanimhaber + sarjnekadar", "checkedAt": "2026-10-22"
+    },
+    "beefull": {
+      "name": "Beefull", "ac": {"min": 9.90, "max": 9.90}, "dc": {"min": 13.99, "max": 13.99},
+      "variesByLocation": false, "confidence": "medium",
+      "source": "araclo + donanimhaber + sarjnekadar", "checkedAt": "2026-10-22"
+    },
+    "aksa-sarj": {
+      "name": "Aksa Şarj", "ac": {"min": 9.90, "max": 10.90}, "dc": {"min": 11.99, "max": 13.99},
+      "variesByLocation": true, "confidence": "medium",
+      "source": "araclo + donanimhaber", "checkedAt": "2026-10-22"
+    },
+    "cv-charging": {
+      "name": "CV Charging", "ac": {"min": 9.99, "max": 9.99}, "dc": {"min": 12.79, "max": 13.49},
+      "variesByLocation": true, "confidence": "low",
+      "source": "araclo (13,49) / sarjnekadar (12,79)", "checkedAt": "2026-10-22"
+    },
+    "toger": {
+      "name": "Toger", "ac": {"min": 9.90, "max": 9.90}, "dc": {"min": 13.39, "max": 13.39},
+      "variesByLocation": false, "confidence": "medium",
+      "source": "araclo + sarjnekadar", "checkedAt": "2026-10-22"
+    },
+    "miggo": {
+      "name": "Miggo", "ac": {"min": 9.50, "max": 9.50}, "dc": {"min": 12.50, "max": 12.50},
+      "variesByLocation": false, "confidence": "low",
+      "source": "donanimhaber", "checkedAt": "2026-10-22"
+    },
+    "powersarj": {
+      "name": "Power Şarj", "ac": {"min": 11.19, "max": 11.19}, "dc": {"min": 13.99, "max": 13.99},
+      "variesByLocation": false, "confidence": "low",
+      "source": "araclo", "checkedAt": "2026-10-22"
+    },
+    "neva-sarj": {
+      "name": "Neva Şarj", "ac": {"min": 9.90, "max": 9.90}, "dc": {"min": 13.90, "max": 13.90},
+      "variesByLocation": false, "confidence": "low",
+      "source": "donanimhaber", "checkedAt": "2026-10-22"
+    },
+    "sharz-net": {
+      "name": "Sharz.net", "ac": {"min": 9.49, "max": 9.49}, "dc": {"min": 11.99, "max": 11.99},
+      "variesByLocation": false, "confidence": "low",
+      "source": "araclo (14.10.2026); sarjnekadar Eylül'de 8,35/10,55 gösteriyordu", "checkedAt": "2026-10-22"
+    },
+    "sarjon": {
+      "name": "Şarjon", "ac": {"min": 10.99, "max": 10.99}, "dc": {"min": 11.99, "max": 13.99},
+      "variesByLocation": true, "confidence": "medium",
+      "source": "araclo + donanimhaber", "checkedAt": "2026-10-22"
+    },
+    "lumicle": {
+      "name": "Lumicle", "ac": {"min": 9.99, "max": 9.99}, "dc": {"min": 13.49, "max": 13.49},
+      "variesByLocation": false, "confidence": "medium",
+      "source": "araclo + donanimhaber + sarjnekadar", "checkedAt": "2026-10-22"
+    },
+    "tora": {
+      "name": "Tora Şarj", "ac": {"min": 9.99, "max": 9.99}, "dc": {"min": 13.49, "max": 13.49},
+      "variesByLocation": false, "confidence": "low",
+      "source": "araclo", "checkedAt": "2026-10-22"
+    },
+    "e-power": {
+      "name": "Petrol Ofisi e-POwer", "ac": {"min": 8.99, "max": 8.99}, "dc": {"min": 11.99, "max": 11.99},
+      "variesByLocation": false, "confidence": "medium",
+      "source": "donanimhaber + sarjnekadar", "checkedAt": "2026-10-22"
+    },
+    "volti": {
+      "name": "Volti", "ac": {"min": 9.99, "max": 9.99}, "dc": {"min": 12.99, "max": 12.99},
+      "variesByLocation": false, "confidence": "medium",
+      "source": "araclo + donanimhaber", "checkedAt": "2026-10-22"
+    },
+    "evbee": {
+      "name": "EV-Bee", "ac": {"min": 9.95, "max": 9.95}, "dc": {"min": 14.98, "max": 14.98},
+      "variesByLocation": false, "confidence": "medium",
+      "source": "araclo + donanimhaber", "checkedAt": "2026-10-22"
+    },
+    "gioev": {
+      "name": "GIO EV", "ac": null, "dc": {"min": 10.99, "max": 13.73},
+      "variesByLocation": true, "confidence": "medium",
+      "source": "araclo + donanimhaber", "checkedAt": "2026-10-22",
+      "note": "donanimhaber AC 9,99 listeliyor; araclo AC tarifesi göstermiyor."
+    },
+    "e4-sarj": {
+      "name": "E4 Şarj", "ac": {"min": 9.99, "max": 10.99}, "dc": {"min": 13.99, "max": 15.99},
+      "variesByLocation": true, "confidence": "low",
+      "source": "donanimhaber", "checkedAt": "2026-10-22"
+    },
+    "g-charge": {
+      "name": "G-Charge", "ac": {"min": 9.90, "max": 9.90}, "dc": {"min": 13.90, "max": 13.90},
+      "variesByLocation": false, "confidence": "low",
+      "source": "donanimhaber", "checkedAt": "2026-10-22"
+    },
+    "elaris": {
+      "name": "Elaris", "ac": {"min": 8.49, "max": 9.49}, "dc": {"min": 10.00, "max": 10.00},
+      "variesByLocation": true, "confidence": "low",
+      "source": "araclo", "checkedAt": "2026-10-22"
+    },
+    "rst-chargepoint": {
+      "name": "RST Charge Point", "ac": {"min": 5.90, "max": 5.90}, "dc": {"min": 13.99, "max": 13.99},
+      "variesByLocation": false, "confidence": "low",
+      "source": "araclo", "checkedAt": "2026-10-22",
+      "note": "AC 5,90 piyasa ortalamasının çok altında; doğrulanmalı."
+    },
+    "tesla": {
+      "name": "Tesla Supercharger", "ac": null, "dc": {"min": 10.40, "max": 13.00},
+      "variesByLocation": true, "confidence": "low",
+      "source": "donanimhaber (Tesla 10,40 / diğer araçlar 13,00); sarjnekadar 11,70", "checkedAt": "2026-10-22",
+      "note": "Fiyat araç markasına ve saate göre değişir."
+    },
+    "porty": {
+      "name": "Porty", "ac": {"min": 8.40, "max": 8.40}, "dc": {"min": 9.90, "max": 9.90},
+      "variesByLocation": false, "confidence": "low",
+      "source": "donanimhaber", "checkedAt": "2026-10-22"
+    }
+  }
+}

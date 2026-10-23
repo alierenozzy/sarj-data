@@ -1,0 +1,70 @@
+name: İstasyonları güncelle
+
+# Günde tek EPDK isteği. Kota dar olduğu için reddedilen çalıştırma ertesi günü bekler;
+# iş yalnızca veri 14 günden eski ya da bozuk görünüyorsa başarısız olur.
+on:
+  schedule:
+    - cron: "43 0 * * *"  # 03:43 Türkiye saati
+  workflow_dispatch:
+  push:
+    paths: ["data/prices.json", "data/brand_aliases.json"]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-stations
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # bayatlama kontrolü stations.json'un son değişim tarihine bakar
+
+      - name: Testler
+        run: python3 scripts/test_fetch_epdk.py
+
+      - name: EPDK'dan çek
+        if: github.event_name != 'push'  # fiyat değişikliğinde EPDK kotasını harcama
+        run: python3 scripts/fetch_epdk.py
+
+      - name: Fiyatları doğrula
+        run: python3 scripts/check_prices.py
+
+      - name: Bayatlama kontrolü
+        run: |
+          last=$(git log -1 --format=%ct -- data/stations.json || true)
+          if [ -z "$last" ] && [ ! -f data/stations.json ]; then
+            echo "stations.json henüz hiç üretilmedi"; exit 1
+          fi
+          if [ -n "$last" ] && [ $(( ( $(date +%s) - last ) / 86400 )) -gt 14 ] && git diff --quiet -- data/stations.json; then
+            echo "stations.json 14 günden eski"; exit 1
+          fi
+
+      - name: meta.json yaz
+        run: |
+          python3 - <<'EOF'
+          import hashlib, json, pathlib
+          d = pathlib.Path("data")
+          st = json.loads((d / "stations.json").read_text(encoding="utf-8"))
+          # Deterministik: içerik değişmedikçe meta.json da değişmez, boş commit oluşmaz.
+          meta = {"stationsGeneratedAt": st["generatedAt"], "stationCount": st["count"]}
+          for name in ("stations", "prices"):
+              meta[f"{name}Version"] = hashlib.sha256((d / f"{name}.json").read_bytes()).hexdigest()[:12]
+          meta["pricesUpdatedAt"] = json.loads((d / "prices.json").read_text(encoding="utf-8"))["updatedAt"]
+          (d / "meta.json").write_text(json.dumps(meta, ensure_ascii=False, indent=2), encoding="utf-8")
+          EOF
+
+      - name: Değiştiyse yayınla
+        run: |
+          git add data/stations.json data/meta.json
+          if git diff --cached --quiet; then
+            echo "Değişiklik yok"; exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "EPDK istasyon verisini güncelle"
+          git push

@@ -1,0 +1,17 @@
+{
+  "_aciklama": "EPDK'daki marka adı (sol, slug'a çevrilir) -> prices.json'daki anahtar (sağ). Yeni bir varyasyon görürsen buraya ekle.",
+  "aliases": {
+    "charging-vehicles-cv": "cv-charging",
+    "elaris-elektrikli-arac-sarj-hizmetleri": "elaris",
+    "e-sarj": "esarj",
+    "zes-dijital": "zes",
+    "shell-recharge": "shell",
+    "petrol-ofisi-e-power": "e-power",
+    "wat": "wat-mobilite",
+    "tuncmatik-charge": "tuncmatik",
+    "power-sarj": "powersarj",
+    "tora-sarj": "tora",
+    "astor-sarj": "astor",
+    "sharz": "sharz-net"
+  }
+}
