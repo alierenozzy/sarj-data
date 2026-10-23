@@ -58,7 +58,7 @@ python3 scripts/test_fetch_epdk.py
 Her marka için `ac` ve `dc` alanı `{min, max}` aralığıdır (tek fiyatlı operatörlerde `min == max`). Birçok büyük operatör (ZES, Trugo, Eşarj, WAT, Otopriz) fiyatı lokasyona göre bir aralık içinde değiştiriyor; tam istasyon fiyatı şu an hiçbir açık kaynakta yok.
 
 Uygulama için öneri:
-- Sıralamada **`min`** kullanın ama aralıklı fiyatları "~" veya "9,90–14,90" olarak gösterin.
+- Sıralamada **`max`** (garanti üst sınır) kullanın, eşitlikte `min`. `min`'e göre sıralamak yanıltır: "9,73–13,90" gibi aralıklı bir operatör, istasyonlarının çoğunda üst fiyatı alsa bile hep en üste çıkar. Aralığı ekranda "9,73–13,90" olarak gösterin.
 - `variesByLocation: true` ise "Kesin fiyat operatör uygulamasında" uyarısı gösterin.
 - Markası `prices.json`'da olmayan istasyonları listede tutun ama "fiyat bilinmiyor" olarak en sona koyun; asla tahmini fiyat göstermeyin.
 - `confidence: low` olanları küçük bir işaretle belirtin.
