@@ -37,7 +37,14 @@ jobs:
       - name: Bayatlama kontrolü
         run: |
           last=$(git log -1 --format=%ct -- data/stations.json || true)
-          if [ -z "$last" ] && [ ! -f data/stations.json ]; then
+          if [ ! -f data/stations.json ]; then
+            if [ "${{ github.event_name }}" = "push" ]; then
+              # Fiyat değişikliğiyle tetiklenen çalıştırma EPDK'yı çağırmaz; henüz istasyon
+              # verisi yoksa yapacak bir şey yok, gece çalışması üretecek.
+              echo "stations.json henüz yok; push çalıştırması atlanıyor"
+              echo "SKIP_PUBLISH=1" >> "$GITHUB_ENV"
+              exit 0
+            fi
             echo "stations.json henüz hiç üretilmedi"; exit 1
           fi
           if [ -n "$last" ] && [ $(( ( $(date +%s) - last ) / 86400 )) -gt 14 ] && git diff --quiet -- data/stations.json; then
@@ -45,6 +52,7 @@ jobs:
           fi
 
       - name: meta.json yaz
+        if: env.SKIP_PUBLISH != '1'
         run: |
           python3 - <<'EOF'
           import hashlib, json, pathlib
@@ -59,6 +67,7 @@ jobs:
           EOF
 
       - name: Değiştiyse yayınla
+        if: env.SKIP_PUBLISH != '1'
         run: |
           git add data/stations.json data/meta.json
           if git diff --cached --quiet; then
